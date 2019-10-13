@@ -6,7 +6,7 @@ set(SockNetLibPath /usr/local/lib/SockNet)
 
 project(${PROJECT_NAME} VERSION 1.0.0 DESCRIPTION "A SockNet Example Program")
 
-file(GLOB SOURCES example.cpp)
+file(GLOB SOURCES src/*.cpp)
 include_directories(BEFORE ${SockNetIncludePath})
 
 find_library (

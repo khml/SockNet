@@ -1,6 +1,18 @@
 # SockNet
 SockNet is tiny C++ socket wrapper.
 
+# Install
+
+```
+$ git clone https://github.com/khml/SockNet.git
+$ cd SockNet
+$ mkdir build && cd build
+$ cmake ../
+$ make
+$ make install
+```
+
+
 # Sample code
 ```
 #include <iostream>

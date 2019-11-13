@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 
-#include "../headers/Connector.hpp"
+#include "Connector.hpp"
 
 using std::string;
 

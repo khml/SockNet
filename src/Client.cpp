@@ -7,8 +7,8 @@
 #include <arpa/inet.h>
 #include <iostream>
 
-#include "../headers/Client.hpp"
-#include "../headers/Connector.hpp"
+#include "Client.hpp"
+#include "Connector.hpp"
 
 using std::cerr;
 using std::endl;

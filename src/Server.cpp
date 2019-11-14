@@ -5,8 +5,8 @@
 #include <sys/socket.h>
 #include <iostream>
 
-#include "../headers/Server.hpp"
-#include "../headers/Connector.hpp"
+#include "Server.hpp"
+#include "Connector.hpp"
 
 using std::cerr;
 using std::endl;

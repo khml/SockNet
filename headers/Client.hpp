@@ -6,6 +6,7 @@
 #define SOCKNET_CLIENT_HPP
 
 #include <string>
+#include <vector>
 
 #include "Connector.hpp"
 
@@ -25,6 +26,8 @@ namespace sockNet
         void sendMessage(const std::string& message);
 
         std::string receiveMessage(size_t bufferSize);
+
+        std::vector<std::string> errors;
 
         bool isConnecting();
 

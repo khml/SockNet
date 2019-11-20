@@ -8,6 +8,7 @@
 
 #include <netinet/in.h>
 #include <string>
+#include <vector>
 
 #include "Connector.hpp"
 
@@ -25,6 +26,8 @@ namespace sockNet
         std::string receiveMessage(size_t bufferSize);
 
         void sendMessage(std::string message);
+
+        std::vector<std::string> errors;
 
         void terminate();
 
@@ -49,10 +52,12 @@ namespace sockNet
 
         bool isSocketOpen();
 
+        std::vector<std::string> errors;
+
     protected:
         int sockfd;
         sockaddr_in addr;
-        bool connectingFlg;
+        bool connectingFlg = false;
     };
 
 }

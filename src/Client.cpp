@@ -5,13 +5,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <iostream>
 
-#include "Client.hpp"
 #include "Connector.hpp"
+#include "Client.hpp"
 
-using std::cerr;
-using std::endl;
 using std::string;
 
 namespace sockNet
@@ -24,7 +21,7 @@ namespace sockNet
         else
         {
             connectingFlg = false;
-            cerr << "socket Error" << endl;
+            errors.emplace_back("socket Error");
         }
 
     }
@@ -63,7 +60,7 @@ namespace sockNet
     {
         if (connector.writeMessage(message) < 0)
         {
-            cerr << "socket write err" << endl;
+            errors.emplace_back("socket write error");
             terminate();
         }
     }
@@ -76,7 +73,7 @@ namespace sockNet
         if (recv_size <= 0)
         {
             if (recv_size < 0)
-                cerr << "socket recv err" << endl;
+                errors.emplace_back("socket recv err");
             terminate();
         }
 

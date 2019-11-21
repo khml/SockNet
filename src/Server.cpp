@@ -8,8 +8,6 @@
 #include "Server.hpp"
 #include "Connector.hpp"
 
-using std::cerr;
-using std::endl;
 
 using std::string;
 
@@ -19,10 +17,9 @@ namespace sockNet
             connector(accept(clientSockfd, (struct sockaddr *) &fromAddr, &len))
     {
         if (connector.isConnected())
-        {
             connectingFlg = true;
-        } else
-            cerr << "accept Error" << endl;
+        else
+            errors.emplace_back("accept Error");
     }
 
     EndPoint::EndPoint(const EndPoint &orig) : connector(orig.connector), connectingFlg(orig.connectingFlg),
@@ -54,7 +51,7 @@ namespace sockNet
         if (recv_size <= 0)
         {
             if (recv_size < 0)
-                cerr << "socket recv Error" << endl;
+                errors.emplace_back("socket recv Error");
             terminate();
         }
 
@@ -64,14 +61,14 @@ namespace sockNet
     void EndPoint::sendMessage(string message)
     {
         if (connector.writeMessage(message) < 0)
-            cerr << "socket write error" << endl;
+            errors.emplace_back("socket write error");
     }
 
     Server::Server(const ushort portNumber)
     {
         if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         {
-            cerr << "socket Error" << endl;
+            errors.emplace_back("socket Error");
             connectingFlg = false;
         }
 
@@ -80,9 +77,7 @@ namespace sockNet
         addr.sin_addr.s_addr = INADDR_ANY;
 
         if (bind(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0)
-        {
-            cerr << "bind Error" << endl;
-        }
+            errors.emplace_back("bind Error");
     }
 
     Server::~Server()
@@ -106,7 +101,7 @@ namespace sockNet
     {
         if (listen(sockfd, SOMAXCONN) < 0)
         {
-            cerr << "listen Error" << endl;
+            errors.emplace_back("listen Error");
             connectingFlg = false;
         }
 

@@ -19,13 +19,13 @@ namespace sockNet
 
         virtual ~Client();
 
-        bool getConnect();
+        bool connect();
 
         void terminate();
 
-        void sendMessage(const std::string& message);
+        void send(const std::string& message);
 
-        std::string receiveMessage(size_t bufferSize);
+        std::string receive(size_t bufferSize);
 
         std::vector<std::string> errors;
 

@@ -13,8 +13,8 @@ using std::string;
 
 namespace sockNet
 {
-    EndPoint::EndPoint(int clientSockfd, socklen_t len) :
-            connector(accept(clientSockfd, (struct sockaddr *) &fromAddr, &len))
+    EndPoint::EndPoint(int clientSockfd, ::socklen_t len) :
+            connector(::accept(clientSockfd, (struct ::sockaddr *) &fromAddr, &len))
     {
         if (connector.isConnected())
             connectingFlg = true;
@@ -43,10 +43,10 @@ namespace sockNet
         connectingFlg = false;
     }
 
-    string EndPoint::receiveMessage(const size_t bufferSize)
+    string EndPoint::receive(size_t bufferSize)
     {
         string message;
-        ssize_t recv_size = connector.readMessage(message, bufferSize);
+        ssize_t recv_size = connector.receive(message, bufferSize);
 
         if (recv_size <= 0)
         {
@@ -58,9 +58,9 @@ namespace sockNet
         return message;
     }
 
-    void EndPoint::sendMessage(string message)
+    void EndPoint::send(string message)
     {
-        if (connector.writeMessage(message) < 0)
+        if (connector.send(message) < 0)
             errors.emplace_back("socket write error");
     }
 
@@ -93,13 +93,13 @@ namespace sockNet
     void Server::terminate()
     {
         if (isSocketOpen())
-            closeSocket(sockfd);
+            close(sockfd);
         connectingFlg = false;
     }
 
-    EndPoint Server::listenForAccess()
+    EndPoint Server::listen()
     {
-        if (listen(sockfd, SOMAXCONN) < 0)
+        if (::listen(sockfd, SOMAXCONN) < 0)
         {
             errors.emplace_back("listen Error");
             connectingFlg = false;

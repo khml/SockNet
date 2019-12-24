@@ -4,6 +4,7 @@
 
 #include <unistd.h>
 #include <sys/socket.h>
+#include <cstring>
 
 #include "Connector.hpp"
 
@@ -11,9 +12,9 @@ using std::string;
 
 namespace sockNet
 {
-    int closeSocket(int sockfd)
+    int close(int sockfd)
     {
-        return close(sockfd);
+        return ::close(sockfd);
     }
 
     Connector::Connector(int sockfd) : sockfd(sockfd)
@@ -26,18 +27,18 @@ namespace sockNet
     Connector::~Connector()
     {}
 
-    ssize_t Connector::writeMessage(const string& message)
+    ssize_t Connector::send(const string& message)
     {
-        return write(sockfd, message.c_str(), (size_t) sizeof(char) * message.size());
+        return ::write(sockfd, message.c_str(), (size_t) sizeof(char) * message.size());
     }
 
-    ssize_t Connector::readMessage(string &message, const size_t bufferSize)
+    ssize_t Connector::receive(string& message, const size_t bufferSize)
     {
         char *buf = new char[bufferSize];
         size_t bufSize = sizeof(char) * bufferSize;
-        memset(buf, 0, bufSize);
+        std::memset(buf, 0, bufSize);
 
-        ssize_t recv_size = recv(sockfd, buf, bufSize, 0);
+        ssize_t recv_size = ::recv(sockfd, buf, bufSize, 0);
 
         message = string(buf);
 
@@ -48,7 +49,7 @@ namespace sockNet
     int Connector::terminate()
     {
         if (isConnected())
-            closeValue = closeSocket(sockfd);
+            closeValue = close(sockfd);
 
         return closeValue;
     }

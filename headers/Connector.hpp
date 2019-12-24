@@ -11,7 +11,7 @@
 
 namespace sockNet
 {
-    int closeSocket(int sockfd);
+    int close(int sockfd);
 
     class Connector
     {
@@ -24,9 +24,9 @@ namespace sockNet
 
         const int sockfd;
 
-        ssize_t writeMessage(const std::string& message);
+        ssize_t send(const std::string& message);
 
-        ssize_t readMessage(std::string &message, size_t bufferSize);
+        ssize_t receive(std::string& message, const size_t bufferSize);
 
         int terminate();
 

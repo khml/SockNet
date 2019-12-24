@@ -29,14 +29,14 @@ namespace sockNet
     Client::~Client()
     {}
 
-    bool Client::getConnect()
+    bool Client::connect()
     {
         struct sockaddr_in addr;
         addr.sin_family = AF_INET;
         addr.sin_port = htons (portNumber);
-        addr.sin_addr.s_addr = inet_addr(address.c_str());
+        addr.sin_addr.s_addr = ::inet_addr(address.c_str());
 
-        if (connect(connector.sockfd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) < 0)
+        if (::connect(connector.sockfd, (struct ::sockaddr *) &addr, sizeof(struct ::sockaddr_in)) < 0)
             terminate();
 
         return isConnecting();
@@ -56,19 +56,19 @@ namespace sockNet
         return connectingFlg;
     }
 
-    void Client::sendMessage(const string& message)
+    void Client::send(const string& message)
     {
-        if (connector.writeMessage(message) < 0)
+        if (connector.send(message) < 0)
         {
             errors.emplace_back("socket write error");
             terminate();
         }
     }
 
-    string Client::receiveMessage(const size_t bufferSize)
+    string Client::receive(size_t bufferSize)
     {
         string message;
-        ssize_t recv_size = connector.readMessage(message, bufferSize);
+        ::ssize_t recv_size = connector.receive(message, bufferSize);
 
         if (recv_size <= 0)
         {

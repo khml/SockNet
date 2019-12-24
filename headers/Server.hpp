@@ -17,15 +17,15 @@ namespace sockNet
     class EndPoint
     {
     public:
-        EndPoint(int clientSockfd, socklen_t len);
+        EndPoint(int clientSockfd, ::socklen_t len);
 
         EndPoint(const EndPoint &orig);
 
         virtual ~EndPoint();
 
-        std::string receiveMessage(size_t bufferSize);
+        std::string receive(size_t bufferSize);
 
-        void sendMessage(std::string message);
+        void send(std::string message);
 
         std::vector<std::string> errors;
 
@@ -35,7 +35,7 @@ namespace sockNet
 
     protected:
         Connector connector;
-        sockaddr_in fromAddr;
+        ::sockaddr_in fromAddr;
         bool connectingFlg;
     };
 
@@ -46,7 +46,7 @@ namespace sockNet
 
         ~Server();
 
-        EndPoint listenForAccess();
+        EndPoint listen();
 
         void terminate();
 
@@ -56,7 +56,7 @@ namespace sockNet
 
     protected:
         int sockfd;
-        sockaddr_in addr;
+        ::sockaddr_in addr;
         bool connectingFlg = false;
     };
 

@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.10)
 
 set(PROJECT_NAME sockNetExample)
 set(SockNetIncludePath /usr/local/include)
 set(SockNetLibPath /usr/local/lib/SockNet)
 
-project(${PROJECT_NAME} VERSION 1.0.0 DESCRIPTION "A SockNet Example Program")
+project(${PROJECT_NAME} VERSION 1.1.0 DESCRIPTION "A SockNet Example Program")
 
 file(GLOB SOURCES src/*.cpp)
 include_directories(BEFORE ${SockNetIncludePath})

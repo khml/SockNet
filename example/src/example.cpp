@@ -47,11 +47,11 @@ int main(int argc, char *argv[])
 int server()
 {
     Server server(1234);
-    EndPoint endPoint = server.listenForAccess();
+    EndPoint endPoint = server.listen();
 
     while (true)
     {
-        auto message = endPoint.receiveMessage(BUFFER_SIZE);
+        auto message = endPoint.receive(BUFFER_SIZE);
         if (!endPoint.isConnecting())
             break;
         cerr << "receive :: " << message << endl;
@@ -60,7 +60,7 @@ int server()
         for (int i = 0; i < std::stoi(message); i++)
             sendMessage += "Hello";
 
-        endPoint.sendMessage(sendMessage);
+        endPoint.send(sendMessage);
         cerr << "send :: " << sendMessage << endl;
     }
 
@@ -73,15 +73,15 @@ int client()
 {
     string address = "127.0.0.1";
     Client client(address, 1234);
-    client.getConnect();
+    client.connect();
 
     string message;
     for (int i = 0; i < 10; i++)
     {
         message = std::to_string(i);
         cerr << "send : " << i << endl;
-        client.sendMessage(message);
-        message = client.receiveMessage(BUFFER_SIZE);
+        client.send(message);
+        message = client.receive(BUFFER_SIZE);
         cerr << "receive : " << message << endl;
         sleep(1);
     }

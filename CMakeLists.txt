@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.10)
 set(PROJECT_NAME SockNet)
 project(${PROJECT_NAME} VERSION 0.0.1 DESCRIPTION "C++ Socket Wrapper")
 

@@ -103,3 +103,55 @@ int client()
     return 0;
 }
 ```
+
+
+client program result in a terminal
+```
+$ ./sockNetExample client
+send : 0
+receive : Message::
+send : 1
+receive : Message::Hello
+send : 2
+receive : Message::HelloHello
+send : 3
+receive : Message::HelloHelloHello
+send : 4
+receive : Message::HelloHelloHelloHello
+send : 5
+receive : Message::HelloHelloHelloHelloHello
+send : 6
+receive : Message::HelloHelloHelloHelloHelloHello
+send : 7
+receive : Message::HelloHelloHelloHelloHelloHelloHello
+send : 8
+receive : Message::HelloHelloHelloHelloHelloHelloHelloHello
+send : 9
+receive : Message::HelloHelloHelloHelloHelloHelloHelloHelloHello
+```
+
+
+server program result in another terminal
+```
+$ ./sockNetExample server
+receive :: 0
+send :: Message::
+receive :: 1
+send :: Message::Hello
+receive :: 2
+send :: Message::HelloHello
+receive :: 3
+send :: Message::HelloHelloHello
+receive :: 4
+send :: Message::HelloHelloHelloHello
+receive :: 5
+send :: Message::HelloHelloHelloHelloHello
+receive :: 6
+send :: Message::HelloHelloHelloHelloHelloHello
+receive :: 7
+send :: Message::HelloHelloHelloHelloHelloHelloHello
+receive :: 8
+send :: Message::HelloHelloHelloHelloHelloHelloHelloHello
+receive :: 9
+send :: Message::HelloHelloHelloHelloHelloHelloHelloHelloHello
+```

@@ -9,7 +9,6 @@
 #include "Connector.hpp"
 
 
-using std::string;
 
 namespace sockNet
 {
@@ -43,9 +42,9 @@ namespace sockNet
         connectingFlg = false;
     }
 
-    string EndPoint::receive(size_t bufferSize)
+    std::string EndPoint::receive(size_t bufferSize)
     {
-        string message;
+        std::string message;
         ssize_t recv_size = connector.receive(message, bufferSize);
 
         if (recv_size <= 0)
@@ -58,7 +57,7 @@ namespace sockNet
         return message;
     }
 
-    void EndPoint::send(string message)
+    void EndPoint::send(std::string message)
     {
         if (connector.send(message) < 0)
             errors.emplace_back("socket write error");

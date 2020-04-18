@@ -26,7 +26,7 @@ namespace sockNet
 
         ssize_t send(const std::string& message);
 
-        ssize_t receive(std::string& message, const size_t bufferSize);
+        ssize_t receive(const std::string& message, size_t bufferSize);
 
         int terminate();
 

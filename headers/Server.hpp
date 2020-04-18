@@ -25,7 +25,7 @@ namespace sockNet
 
         std::string receive(size_t bufferSize);
 
-        void send(std::string message);
+        void send(const std::string& message);
 
         std::vector<std::string> errors;
 

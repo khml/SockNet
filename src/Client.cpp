@@ -6,14 +6,16 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include <utility>
+
 #include "Connector.hpp"
 #include "Client.hpp"
 
 
 namespace sockNet
 {
-    Client::Client(std::string address, unsigned short portNumber) : address(address), portNumber(portNumber),
-                                                                connector(socket(AF_INET, SOCK_STREAM, 0))
+    Client::Client(std::string  address, const unsigned short portNumber) :
+            connector(socket(AF_INET, SOCK_STREAM, 0)), address(std::move(address)), portNumber(portNumber)
     {
         if (connector.isConnected())
             connectingFlg = true;
@@ -64,7 +66,7 @@ namespace sockNet
         }
     }
 
-    std::string Client::receive(size_t bufferSize)
+    std::string Client::receive(const size_t bufferSize)
     {
         std::string message;
         ::ssize_t recv_size = connector.receive(message, bufferSize);

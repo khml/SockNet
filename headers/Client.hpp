@@ -15,7 +15,7 @@ namespace sockNet
     class Client
     {
     public:
-        Client(std::string address, unsigned short portNumber);
+        Client(std::string  address, unsigned short portNumber);
 
         virtual ~Client();
 

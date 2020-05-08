@@ -9,11 +9,9 @@
 #include "Connector.hpp"
 
 
-using std::string;
-
 namespace sockNet
 {
-    EndPoint::EndPoint(int clientSockfd, ::socklen_t len) :
+    EndPoint::EndPoint(const int clientSockfd, ::socklen_t len) :
             connector(::accept(clientSockfd, (struct ::sockaddr *) &fromAddr, &len))
     {
         if (connector.isConnected())
@@ -22,8 +20,8 @@ namespace sockNet
             errors.emplace_back("accept Error");
     }
 
-    EndPoint::EndPoint(const EndPoint &orig) : connector(orig.connector), connectingFlg(orig.connectingFlg),
-                                               fromAddr(orig.fromAddr)
+    EndPoint::EndPoint(const EndPoint& orig) : connector(orig.connector), fromAddr(orig.fromAddr),
+                                               connectingFlg(orig.connectingFlg)
     {}
 
     EndPoint::~EndPoint()
@@ -43,9 +41,9 @@ namespace sockNet
         connectingFlg = false;
     }
 
-    string EndPoint::receive(size_t bufferSize)
+    std::string EndPoint::receive(const size_t bufferSize)
     {
-        string message;
+        std::string message;
         ssize_t recv_size = connector.receive(message, bufferSize);
 
         if (recv_size <= 0)
@@ -58,7 +56,7 @@ namespace sockNet
         return message;
     }
 
-    void EndPoint::send(string message)
+    void EndPoint::send(const std::string& message)
     {
         if (connector.send(message) < 0)
             errors.emplace_back("socket write error");

@@ -8,16 +8,15 @@
 
 #include "Connector.hpp"
 
-using std::string;
 
 namespace sockNet
 {
-    int close(int sockfd)
+    int close(const int sockfd)
     {
         return ::close(sockfd);
     }
 
-    Connector::Connector(int sockfd) : sockfd(sockfd)
+    Connector::Connector(const int sockfd) : sockfd(sockfd)
     {}
 
     Connector::Connector(const Connector &orig) : sockfd(orig.sockfd)
@@ -27,12 +26,12 @@ namespace sockNet
     Connector::~Connector()
     {}
 
-    ssize_t Connector::send(const string& message)
+    ssize_t Connector::send(const std::string& message)
     {
         return ::write(sockfd, message.c_str(), (size_t) sizeof(char) * message.size());
     }
 
-    ssize_t Connector::receive(string& message, const size_t bufferSize)
+    ssize_t Connector::receive(const std::string& message, const size_t bufferSize)
     {
         char *buf = new char[bufferSize];
         size_t bufSize = sizeof(char) * bufferSize;
@@ -40,7 +39,7 @@ namespace sockNet
 
         ssize_t recv_size = ::recv(sockfd, buf, bufSize, 0);
 
-        message = string(buf);
+        message = std::string(buf);
 
         delete[] buf;
         return recv_size;

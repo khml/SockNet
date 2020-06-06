@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-set(PROJECT_NAME SockNet)
+set(PROJECT_NAME socknet)
 project(${PROJECT_NAME} VERSION 0.1.0 DESCRIPTION "C++ Socket Wrapper")
 
 set(CMAKE_CXX_STANDARD 11)

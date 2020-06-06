@@ -5,7 +5,6 @@
 #ifndef SOCKNET_SERVER_HPP
 #define SOCKNET_SERVER_HPP
 
-
 #include <netinet/in.h>
 #include <string>
 #include <vector>
@@ -19,7 +18,7 @@ namespace sockNet
     public:
         EndPoint(int clientSockfd, ::socklen_t len);
 
-        EndPoint(const EndPoint &orig);
+        EndPoint(const EndPoint& orig);
 
         virtual ~EndPoint();
 
@@ -61,6 +60,5 @@ namespace sockNet
     };
 
 }
-
 
 #endif //SOCKNET_SERVER_HPP

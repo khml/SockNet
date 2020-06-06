@@ -8,6 +8,7 @@ add_definitions("-Wall")
 include_directories(socknet/include)
 
 file(GLOB SOURCES socknet/src/*.cpp)
+file(GLOB HEADERS socknet/include/socknet/*.hpp)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${HEADERS}")

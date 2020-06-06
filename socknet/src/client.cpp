@@ -8,8 +8,8 @@
 
 #include <utility>
 
-#include "Connector.hpp"
-#include "Client.hpp"
+#include <socknet/connector.hpp>
+#include <socknet/client.hpp>
 
 namespace sockNet
 {

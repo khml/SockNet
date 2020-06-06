@@ -3,10 +3,9 @@
 //
 
 #include <sys/socket.h>
-#include <iostream>
 
-#include "Server.hpp"
-#include "Connector.hpp"
+#include <socknet/server.hpp>
+#include <socknet/connector.hpp>
 
 namespace sockNet
 {

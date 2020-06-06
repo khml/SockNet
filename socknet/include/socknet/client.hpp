@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "Connector.hpp"
+#include <socknet/connector.hpp>
 
 namespace sockNet
 {

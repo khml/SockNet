@@ -8,11 +8,10 @@
 #include "Server.hpp"
 #include "Connector.hpp"
 
-
 namespace sockNet
 {
     EndPoint::EndPoint(const int clientSockfd, ::socklen_t len) :
-            connector(::accept(clientSockfd, (struct ::sockaddr *) &fromAddr, &len))
+        connector(::accept(clientSockfd, (struct ::sockaddr*) &fromAddr, &len))
     {
         if (connector.isConnected())
             connectingFlg = true;
@@ -20,8 +19,8 @@ namespace sockNet
             errors.emplace_back("accept Error");
     }
 
-    EndPoint::EndPoint(const EndPoint& orig) : connector(orig.connector), fromAddr(orig.fromAddr),
-                                               connectingFlg(orig.connectingFlg)
+    EndPoint::EndPoint(const EndPoint& orig) :connector(orig.connector), fromAddr(orig.fromAddr),
+        connectingFlg(orig.connectingFlg)
     {}
 
     EndPoint::~EndPoint()
@@ -74,7 +73,7 @@ namespace sockNet
         addr.sin_port = htons (portNumber);
         addr.sin_addr.s_addr = INADDR_ANY;
 
-        if (bind(sockfd, (struct sockaddr *) &addr, sizeof(addr)) < 0)
+        if (bind(sockfd, (struct sockaddr*) &addr, sizeof(addr)) < 0)
             errors.emplace_back("bind Error");
     }
 

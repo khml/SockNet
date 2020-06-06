@@ -5,7 +5,6 @@
 #ifndef SOCKNET_CONNECTOR_HPP
 #define SOCKNET_CONNECTOR_HPP
 
-
 #include <cstddef>
 #include <string>
 
@@ -18,7 +17,7 @@ namespace sockNet
     public:
         Connector(int sockfd);
 
-        Connector(const Connector &orig);
+        Connector(const Connector& orig);
 
         virtual ~Connector();
 
@@ -26,7 +25,7 @@ namespace sockNet
 
         ssize_t send(const std::string& message);
 
-        ssize_t receive(const std::string& message, size_t bufferSize);
+        ssize_t receive(std::string& message, size_t bufferSize);
 
         int terminate();
 
@@ -37,6 +36,5 @@ namespace sockNet
         int closeValue = 0;
     };
 }
-
 
 #endif //SOCKNET_CONNECTOR_HPP

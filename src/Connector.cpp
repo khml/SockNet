@@ -8,7 +8,6 @@
 
 #include "Connector.hpp"
 
-
 namespace sockNet
 {
     int close(const int sockfd)
@@ -16,12 +15,11 @@ namespace sockNet
         return ::close(sockfd);
     }
 
-    Connector::Connector(const int sockfd) : sockfd(sockfd)
+    Connector::Connector(const int sockfd) :sockfd(sockfd)
     {}
 
-    Connector::Connector(const Connector &orig) : sockfd(orig.sockfd)
+    Connector::Connector(const Connector& orig) :sockfd(orig.sockfd)
     {}
-
 
     Connector::~Connector()
     {}
@@ -31,9 +29,9 @@ namespace sockNet
         return ::write(sockfd, message.c_str(), (size_t) sizeof(char) * message.size());
     }
 
-    ssize_t Connector::receive(const std::string& message, const size_t bufferSize)
+    ssize_t Connector::receive(std::string& message, const size_t bufferSize)
     {
-        char *buf = new char[bufferSize];
+        char* buf = new char[bufferSize];
         size_t bufSize = sizeof(char) * bufferSize;
         std::memset(buf, 0, bufSize);
 

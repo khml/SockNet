@@ -11,11 +11,10 @@
 #include "Connector.hpp"
 #include "Client.hpp"
 
-
 namespace sockNet
 {
-    Client::Client(std::string  address, const unsigned short portNumber) :
-            connector(socket(AF_INET, SOCK_STREAM, 0)), address(std::move(address)), portNumber(portNumber)
+    Client::Client(std::string address, const unsigned short portNumber) :
+        connector(socket(AF_INET, SOCK_STREAM, 0)), address(std::move(address)), portNumber(portNumber)
     {
         if (connector.isConnected())
             connectingFlg = true;
@@ -37,7 +36,7 @@ namespace sockNet
         addr.sin_port = htons (portNumber);
         addr.sin_addr.s_addr = ::inet_addr(address.c_str());
 
-        if (::connect(connector.sockfd, (struct ::sockaddr *) &addr, sizeof(struct ::sockaddr_in)) < 0)
+        if (::connect(connector.sockfd, (struct ::sockaddr*) &addr, sizeof(struct ::sockaddr_in)) < 0)
             terminate();
 
         return isConnecting();

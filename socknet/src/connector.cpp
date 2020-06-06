@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <cstring>
 
-#include "Connector.hpp"
+#include <socknet/connector.hpp>
 
 namespace sockNet
 {

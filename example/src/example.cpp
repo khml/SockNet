@@ -6,8 +6,8 @@
 #include <string>
 #include <unistd.h>
 
-#include <SockNet/Server.hpp>
-#include <SockNet/Client.hpp>
+#include <socknet/server.hpp>
+#include <socknet/client.hpp>
 
 using std::string;
 using std::cerr;

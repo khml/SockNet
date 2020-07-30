@@ -6,15 +6,11 @@
 #include <string>
 #include <unistd.h>
 
-#include <socknet/server.hpp>
-#include <socknet/client.hpp>
+#include <socknet/socknet.hpp>
 
 using std::string;
 using std::cerr;
 using std::endl;
-using sockNet::Server;
-using sockNet::Client;
-using sockNet::EndPoint;
 
 #define BUFFER_SIZE 1024
 
@@ -46,8 +42,8 @@ int main(int argc, char *argv[])
 
 int server()
 {
-    Server server(1234);
-    EndPoint endPoint = server.listen();
+    sockNet::Server server(1234);
+    sockNet::EndPoint endPoint = server.listen();
 
     while (true)
     {
@@ -72,7 +68,7 @@ int server()
 int client()
 {
     string address = "127.0.0.1";
-    Client client(address, 1234);
+    sockNet::Client client(address, 1234);
     client.connect();
 
     string message;

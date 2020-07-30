@@ -4,31 +4,27 @@
 
 #include <iostream>
 #include <string>
+#include <thread>
 #include <unistd.h>
 
-#include <socknet/server.hpp>
-#include <socknet/client.hpp>
+#include <socknet/socknet.hpp>
 
 using std::string;
-using std::cerr;
-using std::endl;
-using sockNet::Server;
-using sockNet::Client;
-using sockNet::EndPoint;
 
 #define BUFFER_SIZE 1024
 
-int server();
+void server();
 
-int client();
+void client();
 
+void bothMode();
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     if (argc != 2)
     {
-        cerr << "please select mode. server or client" << endl;
-        exit(0);
+        bothMode();
+        return 0;
     }
 
     string mode;
@@ -39,53 +35,60 @@ int main(int argc, char *argv[])
     else if (mode == "client")
         client();
     else
-        cerr << "not exist such a mode " << mode << endl;
+        std::cerr << "unexpected error." << std::endl;
 
     return 0;
 }
 
-int server()
+void server()
 {
-    Server server(1234);
-    EndPoint endPoint = server.listen();
+    sockNet::Server server(1234);
+    sockNet::EndPoint endPoint = server.listen();
 
     while (true)
     {
         auto message = endPoint.receive(BUFFER_SIZE);
         if (!endPoint.isConnecting())
             break;
-        cerr << "receive :: " << message << endl;
+        std::cout << "server::receive :: " << message << std::endl;
 
         string sendMessage("Message::");
         for (int i = 0; i < std::stoi(message); i++)
             sendMessage += "Hello";
 
         endPoint.send(sendMessage);
-        cerr << "send :: " << sendMessage << endl;
+        std::cout << "server::send :: " << sendMessage << std::endl;
     }
 
     endPoint.terminate();
     server.terminate();
-    return 0;
 }
 
-int client()
+void client()
 {
     string address = "127.0.0.1";
-    Client client(address, 1234);
+    sockNet::Client client(address, 1234);
     client.connect();
 
     string message;
     for (int i = 0; i < 10; i++)
     {
         message = std::to_string(i);
-        cerr << "send : " << i << endl;
+        std::cout << "client::send : " << i << std::endl;
         client.send(message);
         message = client.receive(BUFFER_SIZE);
-        cerr << "receive : " << message << endl;
+        std::cout << "client::receive : " << message << std::endl;
         sleep(1);
     }
 
     client.terminate();
-    return 0;
+}
+
+void bothMode()
+{
+    std::thread serverThread(server);
+    std::thread clientThread(client);
+
+    serverThread.join();
+    clientThread.join();
 }

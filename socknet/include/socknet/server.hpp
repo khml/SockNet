@@ -9,35 +9,10 @@
 #include <string>
 #include <vector>
 
-#include <socknet/connector.hpp>
+#include <socknet/endpoint.hpp>
 
 namespace sockNet
 {
-    class EndPoint
-    {
-    public:
-        EndPoint(int clientSockfd, ::socklen_t len);
-
-        EndPoint(const EndPoint& orig);
-
-        virtual ~EndPoint();
-
-        std::string receive(size_t bufferSize);
-
-        void send(const std::string& message);
-
-        std::vector<std::string> errors;
-
-        void terminate();
-
-        bool isConnecting();
-
-    protected:
-        Connector connector;
-        ::sockaddr_in fromAddr;
-        bool connectingFlg;
-    };
-
     class Server
     {
     public:

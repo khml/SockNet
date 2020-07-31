@@ -1,12 +1,8 @@
 //
-// Created by KHML on 2019-07-29.
+// Created by KHML on 2020/07/28.
 //
 
-#include <sys/socket.h>
-#include <iostream>
-
-#include "Server.hpp"
-#include "Connector.hpp"
+#include <socknet/endpoint.hpp>
 
 namespace sockNet
 {
@@ -28,7 +24,7 @@ namespace sockNet
         terminate();
     }
 
-    bool EndPoint::isConnecting()
+    bool EndPoint::isConnecting() const
     {
         return connectingFlg;
     }
@@ -60,52 +56,4 @@ namespace sockNet
         if (connector.send(message) < 0)
             errors.emplace_back("socket write error");
     }
-
-    Server::Server(const ushort portNumber)
-    {
-        if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-        {
-            errors.emplace_back("socket Error");
-            connectingFlg = false;
-        }
-
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons (portNumber);
-        addr.sin_addr.s_addr = INADDR_ANY;
-
-        if (bind(sockfd, (struct sockaddr*) &addr, sizeof(addr)) < 0)
-            errors.emplace_back("bind Error");
-    }
-
-    Server::~Server()
-    {
-        terminate();
-    }
-
-    bool Server::isSocketOpen()
-    {
-        return connectingFlg;
-    }
-
-    void Server::terminate()
-    {
-        if (isSocketOpen())
-            close(sockfd);
-        connectingFlg = false;
-    }
-
-    EndPoint Server::listen()
-    {
-        if (::listen(sockfd, SOMAXCONN) < 0)
-        {
-            errors.emplace_back("listen Error");
-            connectingFlg = false;
-        }
-
-        socklen_t len = sizeof(addr);
-
-        EndPoint endPoint(sockfd, len);
-        return endPoint;
-    }
-
 }

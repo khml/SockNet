@@ -10,12 +10,10 @@
 
 namespace sockNet
 {
-    int close(int sockfd);
-
     class Connector
     {
     public:
-        Connector(int sockfd);
+        explicit Connector(int sockfd);
 
         Connector(const Connector& orig);
 
@@ -23,13 +21,13 @@ namespace sockNet
 
         const int sockfd;
 
-        ssize_t send(const std::string& message);
+        ssize_t send(const std::string& message) const;
 
-        ssize_t receive(std::string& message, size_t bufferSize);
+        ssize_t receive(std::string& message, size_t bufferSize) const;
 
         int terminate();
 
-        bool isConnected();
+        bool isConnected() const;
 
     protected:
         bool connectingFlg = true;

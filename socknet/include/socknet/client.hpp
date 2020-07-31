@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "Connector.hpp"
+#include <socknet/connector.hpp>
 
 namespace sockNet
 {
@@ -29,7 +29,7 @@ namespace sockNet
 
         std::vector<std::string> errors;
 
-        bool isConnecting();
+        bool isConnecting() const;
 
     protected:
         Connector connector;

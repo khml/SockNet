@@ -8,8 +8,8 @@
 
 #include <utility>
 
-#include "Connector.hpp"
-#include "Client.hpp"
+#include <socknet/connector.hpp>
+#include <socknet/client.hpp>
 
 namespace sockNet
 {
@@ -27,11 +27,11 @@ namespace sockNet
     }
 
     Client::~Client()
-    {}
+    = default;
 
     bool Client::connect()
     {
-        struct sockaddr_in addr;
+        struct ::sockaddr_in addr{};
         addr.sin_family = AF_INET;
         addr.sin_port = htons (portNumber);
         addr.sin_addr.s_addr = ::inet_addr(address.c_str());
@@ -51,7 +51,7 @@ namespace sockNet
         connectingFlg = false;
     }
 
-    bool Client::isConnecting()
+    bool Client::isConnecting() const
     {
         return connectingFlg;
     }

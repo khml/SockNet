@@ -41,7 +41,7 @@ namespace sockNet
     class Server
     {
     public:
-        Server(ushort portNumber);
+        explicit Server(ushort portNumber);
 
         ~Server();
 

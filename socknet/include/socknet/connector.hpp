@@ -15,7 +15,7 @@ namespace sockNet
     class Connector
     {
     public:
-        Connector(int sockfd);
+        explicit Connector(int sockfd);
 
         Connector(const Connector& orig);
 

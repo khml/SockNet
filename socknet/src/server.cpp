@@ -4,8 +4,8 @@
 
 #include <sys/socket.h>
 
+#include <socknet/utilities.hpp>
 #include <socknet/server.hpp>
-#include <socknet/connector.hpp>
 
 namespace sockNet
 {
@@ -30,7 +30,7 @@ namespace sockNet
         terminate();
     }
 
-    bool Server::isSocketOpen()
+    bool Server::isSocketOpen() const
     {
         return connectingFlg;
     }

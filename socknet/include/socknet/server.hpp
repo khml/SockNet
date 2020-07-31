@@ -24,13 +24,13 @@ namespace sockNet
 
         void terminate();
 
-        bool isSocketOpen();
+        bool isSocketOpen() const;
 
         std::vector<std::string> errors;
 
     protected:
         int sockfd;
-        ::sockaddr_in addr;
+        ::sockaddr_in addr{};
         bool connectingFlg = false;
     };
 

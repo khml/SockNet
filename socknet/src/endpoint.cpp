@@ -24,7 +24,7 @@ namespace sockNet
         terminate();
     }
 
-    bool EndPoint::isConnecting()
+    bool EndPoint::isConnecting() const
     {
         return connectingFlg;
     }

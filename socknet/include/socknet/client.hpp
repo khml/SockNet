@@ -29,7 +29,7 @@ namespace sockNet
 
         std::vector<std::string> errors;
 
-        bool isConnecting();
+        bool isConnecting() const;
 
     protected:
         Connector connector;

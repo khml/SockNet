@@ -29,11 +29,11 @@ namespace sockNet
 
         void terminate();
 
-        bool isConnecting();
+        bool isConnecting() const;
 
     protected:
         Connector connector;
-        ::sockaddr_in fromAddr;
+        ::sockaddr_in fromAddr{};
         bool connectingFlg;
     };
 }

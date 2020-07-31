@@ -6,15 +6,11 @@
 #include <sys/socket.h>
 #include <cstring>
 
+#include <socknet/utilities.hpp>
 #include <socknet/connector.hpp>
 
 namespace sockNet
 {
-    int close(const int sockfd)
-    {
-        return ::close(sockfd);
-    }
-
     Connector::Connector(const int sockfd) :sockfd(sockfd)
     {}
 
@@ -22,14 +18,14 @@ namespace sockNet
     {}
 
     Connector::~Connector()
-    {}
+    = default;
 
-    ssize_t Connector::send(const std::string& message)
+    ssize_t Connector::send(const std::string& message) const
     {
         return ::write(sockfd, message.c_str(), (size_t) sizeof(char) * message.size());
     }
 
-    ssize_t Connector::receive(std::string& message, const size_t bufferSize)
+    ssize_t Connector::receive(std::string& message, const size_t bufferSize) const
     {
         char* buf = new char[bufferSize];
         size_t bufSize = sizeof(char) * bufferSize;
@@ -51,7 +47,7 @@ namespace sockNet
         return closeValue;
     }
 
-    bool Connector::isConnected()
+    bool Connector::isConnected() const
     {
         return connectingFlg;
     }

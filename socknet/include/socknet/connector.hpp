@@ -29,7 +29,7 @@ namespace sockNet
 
         bool isConnected() const;
 
-    protected:
+    private:
         bool connectingFlg = true;
         int closeValue = 0;
     };

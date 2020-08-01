@@ -16,7 +16,7 @@ namespace sockNet
     class Server
     {
     public:
-        explicit Server(ushort portNumber);
+        explicit Server(uint16_t portNumber);
 
         ~Server();
 
@@ -24,12 +24,12 @@ namespace sockNet
 
         void terminate();
 
-        bool isSocketOpen() const;
+        bool isSocketOpened() const;
 
         std::vector<std::string> errors;
 
-    protected:
-        int sockfd;
+    private:
+        const int sockfd;
         ::sockaddr_in addr{};
         bool connectingFlg = false;
     };

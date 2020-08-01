@@ -31,10 +31,9 @@ namespace sockNet
 
         bool isConnecting() const;
 
-    protected:
+    private:
         Connector connector;
         ::sockaddr_in fromAddr{};
-        bool connectingFlg;
     };
 }
 

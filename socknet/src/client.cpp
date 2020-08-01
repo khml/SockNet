@@ -16,14 +16,8 @@ namespace sockNet
     Client::Client(std::string address, const unsigned short portNumber) :
         connector(socket(AF_INET, SOCK_STREAM, 0)), address(std::move(address)), portNumber(portNumber)
     {
-        if (connector.isConnected())
-            connectingFlg = true;
-        else
-        {
-            connectingFlg = false;
+        if (!connector.isConnected())
             errors.emplace_back("socket Error");
-        }
-
     }
 
     Client::~Client()
@@ -48,12 +42,11 @@ namespace sockNet
             return;
 
         connector.terminate();
-        connectingFlg = false;
     }
 
     bool Client::isConnecting() const
     {
-        return connectingFlg;
+        return connector.isConnected();
     }
 
     void Client::send(const std::string& message)

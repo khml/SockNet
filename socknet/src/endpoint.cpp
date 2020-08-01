@@ -9,14 +9,11 @@ namespace sockNet
     EndPoint::EndPoint(const int clientSockfd, ::socklen_t len) :
         connector(::accept(clientSockfd, (struct ::sockaddr*) &fromAddr, &len))
     {
-        if (connector.isConnected())
-            connectingFlg = true;
-        else
+        if (!connector.isConnected())
             errors.emplace_back("accept Error");
     }
 
-    EndPoint::EndPoint(const EndPoint& orig) :connector(orig.connector), fromAddr(orig.fromAddr),
-        connectingFlg(orig.connectingFlg)
+    EndPoint::EndPoint(const EndPoint& orig) :connector(orig.connector), fromAddr(orig.fromAddr)
     {}
 
     EndPoint::~EndPoint()
@@ -26,14 +23,13 @@ namespace sockNet
 
     bool EndPoint::isConnecting() const
     {
-        return connectingFlg;
+        return connector.isConnected();
     }
 
     void EndPoint::terminate()
     {
         if (isConnecting())
             connector.terminate();
-        connectingFlg = false;
     }
 
     std::string EndPoint::receive(const size_t bufferSize)

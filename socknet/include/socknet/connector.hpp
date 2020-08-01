@@ -8,7 +8,7 @@
 #include <cstddef>
 #include <string>
 
-namespace sockNet
+namespace socknet
 {
     class Connector
     {

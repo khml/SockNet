@@ -7,7 +7,7 @@
 #include <socknet/utilities.hpp>
 #include <socknet/server.hpp>
 
-namespace sockNet
+namespace socknet
 {
     Server::Server(const uint16_t portNumber) :sockfd(socket(AF_INET, SOCK_STREAM, 0))
     {

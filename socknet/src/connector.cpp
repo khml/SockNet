@@ -9,7 +9,7 @@
 #include <socknet/utilities.hpp>
 #include <socknet/connector.hpp>
 
-namespace sockNet
+namespace socknet
 {
     Connector::Connector(const int sockfd) :sockfd(sockfd)
     {}

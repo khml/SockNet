@@ -11,7 +11,7 @@
 #include <socknet/connector.hpp>
 #include <socknet/client.hpp>
 
-namespace sockNet
+namespace socknet
 {
     Client::Client(std::string address, const unsigned short portNumber) :
         connector(socket(AF_INET, SOCK_STREAM, 0)), address(std::move(address)), portNumber(portNumber)

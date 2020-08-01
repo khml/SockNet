@@ -10,7 +10,7 @@
 
 #include <socknet/connector.hpp>
 
-namespace sockNet
+namespace socknet
 {
     class EndPoint
     {

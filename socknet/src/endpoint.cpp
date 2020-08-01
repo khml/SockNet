@@ -4,7 +4,7 @@
 
 #include <socknet/endpoint.hpp>
 
-namespace sockNet
+namespace socknet
 {
     EndPoint::EndPoint(const int clientSockfd, ::socklen_t len) :
         connector(::accept(clientSockfd, (struct ::sockaddr*) &fromAddr, &len))

@@ -11,7 +11,7 @@
 
 #include <socknet/endpoint.hpp>
 
-namespace sockNet
+namespace socknet
 {
     class Server
     {

@@ -42,22 +42,22 @@ int main(int argc, char* argv[])
 
 void server()
 {
-    sockNet::Server server(1234);
-    sockNet::EndPoint endPoint = server.listen();
+    socknet::Server server(1234);
+    socknet::EndPoint endPoint = server.listen();
 
     while (true)
     {
         auto message = endPoint.receive(BUFFER_SIZE);
         if (!endPoint.isConnecting())
             break;
-        std::cout << "server::receive :: " << message << std::endl;
+        std::cout << "server::receive : " << message << std::endl;
 
         string sendMessage("Message::");
         for (int i = 0; i < std::stoi(message); i++)
             sendMessage += "Hello";
 
         endPoint.send(sendMessage);
-        std::cout << "server::send :: " << sendMessage << std::endl;
+        std::cout << "server::send    : " << sendMessage << std::endl;
     }
 
     endPoint.terminate();
@@ -67,14 +67,14 @@ void server()
 void client()
 {
     string address = "127.0.0.1";
-    sockNet::Client client(address, 1234);
+    socknet::Client client(address, 1234);
     client.connect();
 
     string message;
     for (int i = 0; i < 10; i++)
     {
         message = std::to_string(i);
-        std::cout << "client::send : " << i << std::endl;
+        std::cout << "client::send    : " << i << std::endl;
         client.send(message);
         message = client.receive(BUFFER_SIZE);
         std::cout << "client::receive : " << message << std::endl;

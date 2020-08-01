@@ -9,27 +9,27 @@
 #include <string>
 #include <vector>
 
-#include <socknet/endpoint.hpp>
+#include <socknet/connetion.hpp>
 
-namespace sockNet
+namespace socknet
 {
     class Server
     {
     public:
-        explicit Server(ushort portNumber);
+        explicit Server(uint16_t portNumber);
 
         ~Server();
 
-        EndPoint listen();
+        Connection listen();
 
         void terminate();
 
-        bool isSocketOpen() const;
+        bool isSocketOpened() const;
 
         std::vector<std::string> errors;
 
-    protected:
-        int sockfd;
+    private:
+        const int sockfd;
         ::sockaddr_in addr{};
         bool connectingFlg = false;
     };

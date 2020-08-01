@@ -10,7 +10,7 @@
 
 #include <socknet/connector.hpp>
 
-namespace sockNet
+namespace socknet
 {
     class Client
     {
@@ -31,11 +31,10 @@ namespace sockNet
 
         bool isConnecting() const;
 
-    protected:
+    private:
         Connector connector;
         const std::string address;
         const unsigned short portNumber;
-        bool connectingFlg;
     };
 
 }

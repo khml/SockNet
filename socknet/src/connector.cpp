@@ -9,7 +9,7 @@
 #include <socknet/utilities.hpp>
 #include <socknet/connector.hpp>
 
-namespace sockNet
+namespace socknet
 {
     Connector::Connector(const int sockfd) :sockfd(sockfd)
     {}
@@ -41,8 +41,11 @@ namespace sockNet
 
     int Connector::terminate()
     {
-        if (isConnected())
-            closeValue = close(sockfd);
+        if (!isConnected())
+            return closeValue;
+
+        closeValue = close(sockfd);
+        connectingFlg = false;
 
         return closeValue;
     }

@@ -2,24 +2,24 @@
 // Created by KHML on 2020/07/28.
 //
 
-#ifndef SOCKNET_ENDPOINT_HPP
-#define SOCKNET_ENDPOINT_HPP
+#ifndef SOCKNET_CONNETION_HPP
+#define SOCKNET_CONNETION_HPP
 
 #include <netinet/in.h>
 #include <vector>
 
 #include <socknet/connector.hpp>
 
-namespace sockNet
+namespace socknet
 {
-    class EndPoint
+    class Connection
     {
     public:
-        EndPoint(int clientSockfd, ::socklen_t len);
+        Connection(int clientSockfd, ::socklen_t len);
 
-        EndPoint(const EndPoint& orig);
+        Connection(const Connection& orig);
 
-        virtual ~EndPoint();
+        virtual ~Connection();
 
         std::string receive(size_t bufferSize);
 
@@ -31,11 +31,10 @@ namespace sockNet
 
         bool isConnecting() const;
 
-    protected:
+    private:
         Connector connector;
         ::sockaddr_in fromAddr{};
-        bool connectingFlg;
     };
 }
 
-#endif //SOCKNET_ENDPOINT_HPP
+#endif //SOCKNET_CONNETION_HPP

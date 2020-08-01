@@ -6,7 +6,7 @@
 
 #include <socknet/utilities.hpp>
 
-namespace sockNet
+namespace socknet
 {
     int close(const int sockfd)
     {

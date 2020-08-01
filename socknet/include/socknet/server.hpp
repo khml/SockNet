@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-#include <socknet/endpoint.hpp>
+#include <socknet/connetion.hpp>
 
 namespace socknet
 {
@@ -20,7 +20,7 @@ namespace socknet
 
         ~Server();
 
-        EndPoint listen();
+        Connection listen();
 
         void terminate();
 

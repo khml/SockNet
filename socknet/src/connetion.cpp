@@ -2,37 +2,37 @@
 // Created by KHML on 2020/07/28.
 //
 
-#include <socknet/endpoint.hpp>
+#include <socknet/connetion.hpp>
 
 namespace socknet
 {
-    EndPoint::EndPoint(const int clientSockfd, ::socklen_t len) :
+    Connection::Connection(const int clientSockfd, ::socklen_t len) :
         connector(::accept(clientSockfd, (struct ::sockaddr*) &fromAddr, &len))
     {
         if (!connector.isConnected())
             errors.emplace_back("accept Error");
     }
 
-    EndPoint::EndPoint(const EndPoint& orig) :connector(orig.connector), fromAddr(orig.fromAddr)
+    Connection::Connection(const Connection& orig) :connector(orig.connector), fromAddr(orig.fromAddr)
     {}
 
-    EndPoint::~EndPoint()
+    Connection::~Connection()
     {
         terminate();
     }
 
-    bool EndPoint::isConnecting() const
+    bool Connection::isConnecting() const
     {
         return connector.isConnected();
     }
 
-    void EndPoint::terminate()
+    void Connection::terminate()
     {
         if (isConnecting())
             connector.terminate();
     }
 
-    std::string EndPoint::receive(const size_t bufferSize)
+    std::string Connection::receive(const size_t bufferSize)
     {
         std::string message;
         ssize_t recv_size = connector.receive(message, bufferSize);
@@ -47,7 +47,7 @@ namespace socknet
         return message;
     }
 
-    void EndPoint::send(const std::string& message)
+    void Connection::send(const std::string& message)
     {
         if (connector.send(message) < 0)
             errors.emplace_back("socket write error");

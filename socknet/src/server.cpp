@@ -42,7 +42,7 @@ namespace socknet
         connectingFlg = false;
     }
 
-    EndPoint Server::listen()
+    Connection Server::listen()
     {
         static const ::socklen_t len = sizeof(addr);
 
@@ -52,7 +52,7 @@ namespace socknet
             connectingFlg = false;
         }
 
-        EndPoint endPoint(sockfd, len);
+        Connection endPoint(sockfd, len);
         return endPoint;
     }
 

@@ -13,7 +13,7 @@ file(GLOB HEADERS include/socknet/*.hpp)
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER "${HEADERS}")
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION 1)
+set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION a010)
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 install(TARGETS ${PROJECT_NAME}
         LIBRARY DESTINATION lib/${PROJECT_NAME}

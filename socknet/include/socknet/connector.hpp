@@ -31,7 +31,7 @@ namespace sockNet
 
     private:
         bool connectingFlg = true;
-        int closeValue = 0;
+        int closeValue{0};
     };
 }
 

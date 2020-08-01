@@ -41,8 +41,11 @@ namespace sockNet
 
     int Connector::terminate()
     {
-        if (isConnected())
-            closeValue = close(sockfd);
+        if (!isConnected())
+            return closeValue;
+
+        closeValue = close(sockfd);
+        connectingFlg = false;
 
         return closeValue;
     }

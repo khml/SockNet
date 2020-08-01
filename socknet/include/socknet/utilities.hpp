@@ -5,7 +5,7 @@
 #ifndef SOCKNET_UTILITIES_HPP
 #define SOCKNET_UTILITIES_HPP
 
-namespace sockNet
+namespace socknet
 {
     int close(int sockfd);
 }

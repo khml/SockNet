@@ -8,7 +8,7 @@
 #include <cstddef>
 #include <string>
 
-namespace sockNet
+namespace socknet
 {
     class Connector
     {
@@ -29,9 +29,9 @@ namespace sockNet
 
         bool isConnected() const;
 
-    protected:
+    private:
         bool connectingFlg = true;
-        int closeValue = 0;
+        int closeValue{0};
     };
 }
 

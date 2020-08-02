@@ -8,7 +8,7 @@
 #include <netinet/in.h>
 #include <vector>
 
-#include <socknet/connector.hpp>
+#include <socknet/core/connector.hpp>
 
 namespace socknet
 {
@@ -32,7 +32,7 @@ namespace socknet
         bool isConnecting() const;
 
     private:
-        Connector connector;
+        core::Connector connector;
         ::sockaddr_in fromAddr{};
     };
 }

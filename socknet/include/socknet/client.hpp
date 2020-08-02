@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include <socknet/connector.hpp>
+#include <socknet/core/connector.hpp>
 
 namespace socknet
 {
@@ -32,7 +32,7 @@ namespace socknet
         bool isConnecting() const;
 
     private:
-        Connector connector;
+        core::Connector connector;
         const std::string address;
         const unsigned short portNumber;
     };

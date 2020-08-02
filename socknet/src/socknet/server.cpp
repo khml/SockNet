@@ -4,7 +4,7 @@
 
 #include <sys/socket.h>
 
-#include <socknet/utilities.hpp>
+#include <socknet/core/utilities.hpp>
 #include <socknet/server.hpp>
 
 namespace socknet
@@ -38,7 +38,7 @@ namespace socknet
     void Server::terminate()
     {
         if (isSocketOpened())
-            close(sockfd);
+            core::closeSocket(sockfd);
         connectingFlg = false;
     }
 

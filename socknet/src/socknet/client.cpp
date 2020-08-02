@@ -8,7 +8,7 @@
 
 #include <utility>
 
-#include <socknet/connector.hpp>
+#include <socknet/core/connector.hpp>
 #include <socknet/client.hpp>
 
 namespace socknet

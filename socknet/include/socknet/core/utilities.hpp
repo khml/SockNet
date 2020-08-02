@@ -7,7 +7,10 @@
 
 namespace socknet
 {
-    int close(int sockfd);
+    namespace core
+    {
+        int closeSocket(int sockfd);
+    }
 }
 
 #endif //SOCKNET_UTILITIES_HPP

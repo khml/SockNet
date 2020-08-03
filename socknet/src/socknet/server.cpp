@@ -44,15 +44,13 @@ namespace socknet
 
     Connection Server::listen()
     {
-        static const ::socklen_t len = sizeof(addr);
-
         if (::listen(sockfd, SOMAXCONN) < 0)
         {
             errors.emplace_back("listen Error");
             connectingFlg = false;
         }
 
-        Connection endPoint(sockfd, len);
+        Connection endPoint(sockfd);
         return endPoint;
     }
 

@@ -6,14 +6,15 @@
 
 namespace socknet
 {
-    Connection::Connection(const int clientSockfd, ::socklen_t len) :
-        connector(::accept(clientSockfd, (struct ::sockaddr*) &fromAddr, &len))
+    Connection::Connection(const int sockfdListened) :clientAddrSize(sizeof(clientAddr)),
+        connector(::accept(sockfdListened, (struct ::sockaddr*) &clientAddr, &clientAddrSize))
     {
         if (!connector.isConnected())
             errors.emplace_back("accept Error");
     }
 
-    Connection::Connection(const Connection& orig) :connector(orig.connector), fromAddr(orig.fromAddr)
+    Connection::Connection(const Connection& orig) :clientAddrSize(orig.clientAddrSize), clientAddr(orig.clientAddr),
+        connector(orig.connector)
     {}
 
     Connection::~Connection()

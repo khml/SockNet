@@ -15,7 +15,7 @@ namespace socknet
     class Connection
     {
     public:
-        Connection(int clientSockfd, ::socklen_t len);
+        explicit Connection(int sockfdListened);
 
         Connection(const Connection& orig);
 
@@ -32,8 +32,9 @@ namespace socknet
         bool isConnecting() const;
 
     private:
+        ::socklen_t clientAddrSize;
+        ::sockaddr_in clientAddr{};
         core::Connector connector;
-        ::sockaddr_in fromAddr{};
     };
 }
 

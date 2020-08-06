@@ -2,8 +2,8 @@
 // Created by KHML on 2020/07/28.
 //
 
-#ifndef SOCKNET_UTILITIES_HPP
-#define SOCKNET_UTILITIES_HPP
+#ifndef SOCKNET_SOCKAPIS_HPP
+#define SOCKNET_SOCKAPIS_HPP
 
 #include <netinet/in.h>
 #include <cstddef>
@@ -39,4 +39,4 @@ namespace socknet
     }
 }
 
-#endif //SOCKNET_UTILITIES_HPP
+#endif //SOCKNET_SOCKAPIS_HPP

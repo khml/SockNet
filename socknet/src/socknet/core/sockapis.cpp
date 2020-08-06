@@ -7,7 +7,7 @@
 #include <cstring>
 #include <stdexcept>
 
-#include <socknet/core/utilities.hpp>
+#include <socknet/core/sockapis.hpp>
 
 namespace socknet
 {

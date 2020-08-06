@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <cstring>
 
-#include <socknet/core/utilities.hpp>
+#include <socknet/core/sockapis.hpp>
 #include <socknet/core/connector.hpp>
 
 namespace socknet

@@ -13,7 +13,7 @@
 
 namespace socknet
 {
-    Client::Client(std::string address, const unsigned short portNumber) :
+    Client::Client(std::string address, const uint16_t portNumber) :
         connector(socket(AF_INET, SOCK_STREAM, 0)), address(std::move(address)), portNumber(portNumber)
     {
         if (!connector.isConnected())

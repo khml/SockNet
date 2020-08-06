@@ -4,7 +4,7 @@
 
 #include <sys/socket.h>
 
-#include <socknet/core/utilities.hpp>
+#include <socknet/core/sockapis.hpp>
 #include <socknet/server.hpp>
 
 namespace socknet

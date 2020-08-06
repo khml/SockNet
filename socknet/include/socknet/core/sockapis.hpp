@@ -2,8 +2,8 @@
 // Created by KHML on 2020/07/28.
 //
 
-#ifndef SOCKNET_UTILITIES_HPP
-#define SOCKNET_UTILITIES_HPP
+#ifndef SOCKNET_SOCKAPIS_HPP
+#define SOCKNET_SOCKAPIS_HPP
 
 #include <netinet/in.h>
 #include <cstddef>
@@ -13,11 +13,15 @@ namespace socknet
 {
     namespace core
     {
-        int createSocket();
-
         struct ::sockaddr_in createAddr(uint16_t portNumber);
 
-        void bindPort(struct ::sockaddr_in& addr, uint16_t portNumber);
+        struct ::sockaddr_in createAddr(uint16_t portNumber, const std::string& address);
+
+        void setSockaddr(struct ::sockaddr_in& addr, uint16_t port);
+
+        void setSockaddr(struct ::sockaddr_in& addr, uint16_t port, const std::string& address);
+
+        int createSocket();
 
         int bindSocket(const int& sockfd, const struct ::sockaddr_in& addr);
 
@@ -29,6 +33,12 @@ namespace socknet
 
         int acceptSocket(const int& sockfd, struct ::sockaddr_in& clientAddr);
 
+        int connectSocket(const int& sockfd, const struct ::sockaddr_in& addr);
+
+        int connectSocket(const int& sockfd, const std::string& address, uint16_t port);
+
+        int connectSocket(const int& sockfd, struct ::sockaddr_in& addr, const std::string& address, uint16_t port);
+
         int waitConnection(const int& sockfd, struct ::sockaddr_in& clientAddr);
 
         ssize_t send(const int& sockfd, const std::string& message);
@@ -39,4 +49,4 @@ namespace socknet
     }
 }
 
-#endif //SOCKNET_UTILITIES_HPP
+#endif //SOCKNET_SOCKAPIS_HPP

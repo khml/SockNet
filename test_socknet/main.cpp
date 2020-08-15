@@ -57,38 +57,46 @@ TEST(TestCoreSockapis, bindSocket)
     const uint port3 = 54323;
 
     // bindSocket(const int& sockfd, const struct ::sockaddr_in& addr)
-    int sockfd = socknet::core::createSocket();
-    ASSERT_GE(sockfd, 0);
+    {
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
 
-    struct ::sockaddr_in addr = socknet::core::createAddr(port1);
-    EXPECT_EQ(addr.sin_family, AF_INET);
-    EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
-    EXPECT_EQ(addr.sin_port, htons(port1));
+        struct ::sockaddr_in addr = socknet::core::createAddr(port1);
+        EXPECT_EQ(addr.sin_family, AF_INET);
+        EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
+        EXPECT_EQ(addr.sin_port, htons(port1));
 
-    int bindResult = socknet::core::bindSocket(sockfd, addr);
-    EXPECT_GE(bindResult, 0);
-    ::close(sockfd);
+        int bindResult = socknet::core::bindSocket(sockfd, addr);
+        EXPECT_GE(bindResult, 0);
+        ::close(sockfd);
+    }
+
 
     //bindSocket(const int& sockfd, uint16_t port)
-    sockfd = socknet::core::createSocket();
-    ASSERT_GE(sockfd, 0);
+    {
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
 
-    bindResult = socknet::core::bindSocket(sockfd, port2);
-    EXPECT_GE(bindResult, 0);
-    ::close(sockfd);
+        int bindResult = socknet::core::bindSocket(sockfd, port2);
+        EXPECT_GE(bindResult, 0);
+        ::close(sockfd);
+    }
+
 
     //bindSocket(const int& sockfd, struct ::sockaddr_in& addr, uint16_t port)
-    sockfd = socknet::core::createSocket();
-    ASSERT_GE(sockfd, 0);
+    {
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
 
-    addr = ::sockaddr_in{};
+        struct ::sockaddr_in addr{};
 
-    bindResult = socknet::core::bindSocket(sockfd, addr, port3);
-    EXPECT_GE(bindResult, 0);
-    EXPECT_EQ(addr.sin_family, AF_INET);
-    EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
-    EXPECT_EQ(addr.sin_port, htons(port3));
-    ::close(sockfd);
+        int bindResult = socknet::core::bindSocket(sockfd, addr, port3);
+        EXPECT_GE(bindResult, 0);
+        EXPECT_EQ(addr.sin_family, AF_INET);
+        EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
+        EXPECT_EQ(addr.sin_port, htons(port3));
+        ::close(sockfd);
+    }
 }
 
 TEST(TestCoreSockapis, listenSocket)
@@ -123,8 +131,8 @@ TEST(TestCoreSockapis, listenSocket)
     // clientThread
     auto client = [port]()
     {
-        int sockfdClient = socknet::core::createSocket();
-        ASSERT_GE(sockfdClient, 0);
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
 
         const std::string address(ADDRESS);
         struct ::sockaddr_in addrClient = socknet::core::createAddr(port, address);
@@ -132,9 +140,9 @@ TEST(TestCoreSockapis, listenSocket)
         EXPECT_EQ(addrClient.sin_port, htons(port));
         EXPECT_EQ(addrClient.sin_addr.s_addr, ::inet_addr(ADDRESS));
 
-        int connectResult = ::connect(sockfdClient, (struct ::sockaddr*) &addrClient, sizeof(struct ::sockaddr_in));
+        int connectResult = ::connect(sockfd, (struct ::sockaddr*) &addrClient, sizeof(struct ::sockaddr_in));
         ASSERT_GE(connectResult, 0);
-        ::close(sockfdClient);
+        ::close(sockfd);
     };
     std::thread clientThread(client);
 
@@ -176,8 +184,8 @@ TEST(TestCoreSockapis, acceptSocket)
     auto client = []()
     {
         std::this_thread::sleep_for(std::chrono::seconds(2));
-        int sockfdClient = socknet::core::createSocket();
-        ASSERT_GE(sockfdClient, 0);
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
 
         const std::string address(ADDRESS);
         struct ::sockaddr_in addrClient = socknet::core::createAddr(port, address);
@@ -185,9 +193,9 @@ TEST(TestCoreSockapis, acceptSocket)
         EXPECT_EQ(addrClient.sin_port, htons(port));
         EXPECT_EQ(addrClient.sin_addr.s_addr, ::inet_addr(ADDRESS));
 
-        int connectResult = ::connect(sockfdClient, (struct ::sockaddr*) &addrClient, sizeof(struct ::sockaddr_in));
+        int connectResult = ::connect(sockfd, (struct ::sockaddr*) &addrClient, sizeof(struct ::sockaddr_in));
         ASSERT_GE(connectResult, 0);
-        ::close(connectResult);
+        ::close(sockfd);
     };
     std::thread clientThread(client);
 

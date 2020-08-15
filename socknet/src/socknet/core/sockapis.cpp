@@ -14,17 +14,17 @@ namespace socknet
 {
     namespace core
     {
-        ::sockaddr_in createAddr(const uint16_t portNumber)
+        ::sockaddr_in createAddr(const uint16_t port)
         {
             struct ::sockaddr_in addr{};
-            setSockaddr(addr, portNumber);
+            setSockaddr(addr, port);
             return addr;
         }
 
-        ::sockaddr_in createAddr(const uint16_t portNumber, const std::string& address)
+        ::sockaddr_in createAddr(const uint16_t port, const std::string& address)
         {
             struct ::sockaddr_in addr{};
-            setSockaddr(addr, portNumber, address);
+            setSockaddr(addr, port, address);
             return addr;
         }
 
@@ -52,15 +52,15 @@ namespace socknet
             return ::bind(sockfd, (struct sockaddr*) &addr, sizeof(addr));
         }
 
-        int bindSocket(const int& sockfd, uint16_t portNumber)
+        int bindSocket(const int& sockfd, uint16_t port)
         {
-            struct ::sockaddr_in addr = createAddr(portNumber);
+            struct ::sockaddr_in addr = createAddr(port);
             return bindSocket(sockfd, addr);
         }
 
-        int bindSocket(const int& sockfd, sockaddr_in& addr, const uint16_t portNumber)
+        int bindSocket(const int& sockfd, sockaddr_in& addr, const uint16_t port)
         {
-            (void) setSockaddr(addr, portNumber);
+            (void) setSockaddr(addr, port);
             return bindSocket(sockfd, addr);
         }
 
@@ -69,10 +69,10 @@ namespace socknet
             return ::listen(sockfd, SOMAXCONN);
         }
 
-        int acceptSocket(const int& sockfd, sockaddr_in& clientAddr)
+        int acceptSocket(const int& sockfd, sockaddr_in& dstAddr)
         {
-            ::socklen_t clientAddrSize = sizeof(clientAddr);
-            return ::accept(sockfd, (struct ::sockaddr*) &clientAddr, &clientAddrSize);
+            ::socklen_t clientAddrSize = sizeof(dstAddr);
+            return ::accept(sockfd, (struct ::sockaddr*) &dstAddr, &clientAddrSize);
         }
 
         int connectSocket(const int& sockfd, const sockaddr_in& addr)

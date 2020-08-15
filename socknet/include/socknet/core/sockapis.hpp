@@ -13,9 +13,9 @@ namespace socknet
 {
     namespace core
     {
-        struct ::sockaddr_in createAddr(uint16_t portNumber);
+        struct ::sockaddr_in createAddr(uint16_t port);
 
-        struct ::sockaddr_in createAddr(uint16_t portNumber, const std::string& address);
+        struct ::sockaddr_in createAddr(uint16_t port, const std::string& address);
 
         void setSockaddr(struct ::sockaddr_in& addr, uint16_t port);
 
@@ -25,13 +25,13 @@ namespace socknet
 
         int bindSocket(const int& sockfd, const struct ::sockaddr_in& addr);
 
-        int bindSocket(const int& sockfd, uint16_t portNumber);
+        int bindSocket(const int& sockfd, uint16_t port);
 
-        int bindSocket(const int& sockfd, struct ::sockaddr_in& addr, uint16_t portNumber);
+        int bindSocket(const int& sockfd, struct ::sockaddr_in& addr, uint16_t port);
 
         int listenSocket(const int& sockfd);
 
-        int acceptSocket(const int& sockfd, struct ::sockaddr_in& clientAddr);
+        int acceptSocket(const int& sockfd, struct ::sockaddr_in& dstAddr);
 
         int connectSocket(const int& sockfd, const struct ::sockaddr_in& addr);
 

@@ -69,10 +69,10 @@ namespace socknet
             return ::listen(sockfd, SOMAXCONN);
         }
 
-        int acceptSocket(const int& sockfd, sockaddr_in& dstAddr)
+        int acceptSocket(const int& sockfd, sockaddr_in& addr)
         {
-            ::socklen_t clientAddrSize = sizeof(dstAddr);
-            return ::accept(sockfd, (struct ::sockaddr*) &dstAddr, &clientAddrSize);
+            ::socklen_t dstAddrSize = sizeof(addr);
+            return ::accept(sockfd, (struct ::sockaddr*) &addr, &dstAddrSize);
         }
 
         int connectSocket(const int& sockfd, const sockaddr_in& addr)
@@ -93,11 +93,11 @@ namespace socknet
             return connectSocket(sockfd, addr);
         }
 
-        int waitConnection(const int& sockfd, sockaddr_in& clientAddr)
+        int waitConnection(const int& sockfd, sockaddr_in& addr)
         {
             if (listenSocket(sockfd) < 0)
                 throw std::runtime_error("listen socket error");
-            return acceptSocket(sockfd, clientAddr);
+            return acceptSocket(sockfd, addr);
         }
 
         ssize_t send(const int& sockfd, const std::string& message)

@@ -119,6 +119,25 @@ namespace socknet
             return recv_size;
         }
 
+        std::string receive(const int& sockfd)
+        {
+            static size_t bufferSize = 1024;
+
+            std::string result;
+
+            char* buf = new char[bufferSize];
+            const size_t bufSize = sizeof(char) * bufferSize;
+            std::memset(buf, 0, bufSize);
+
+            while (::recv(sockfd, buf, bufSize, 0) > 0)
+            {
+                result += std::string(buf);
+                std::memset(buf, 0, bufSize);
+            }
+
+            return result;
+        }
+
         int closeSocket(const int& sockfd)
         {
             return ::close(sockfd);

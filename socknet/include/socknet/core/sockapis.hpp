@@ -180,13 +180,21 @@ namespace socknet
 
         /**
          * receive(const int& sockfd, std::string& message, size_t bufferSize)
-         * @brief
+         * @brief call recv function
          * @param sockfd
          * @param message
          * @param bufferSize
          * @return recv result
          */
         ssize_t receive(const int& sockfd, std::string& message, size_t bufferSize);
+
+        /**
+         * receive(const int& sockfd
+         * @brief receive message
+         * @param sockfd
+         * @return recieved message
+         */
+        std::string receive(const int& sockfd);
 
         /**
          * closeSocket(const int& sockfd)

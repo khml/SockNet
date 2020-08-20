@@ -2,18 +2,19 @@
 // Created by KHML on 2020/07/28.
 //
 
+#include <socknet/core/sockapis.hpp>
 #include <socknet/connetion.hpp>
 
 namespace socknet
 {
-    Connection::Connection(const int sockfdListened) :clientAddrSize(sizeof(clientAddr)),
-        connector(::accept(sockfdListened, (struct ::sockaddr*) &clientAddr, &clientAddrSize))
+    Connection::Connection(const int sockfdListened) :
+        connector(core::acceptSocket(sockfdListened, dstAddr))
     {
         if (!connector.isConnected())
             errors.emplace_back("accept Error");
     }
 
-    Connection::Connection(const Connection& orig) :clientAddrSize(orig.clientAddrSize), clientAddr(orig.clientAddr),
+    Connection::Connection(const Connection& orig) :dstAddr(orig.dstAddr),
         connector(orig.connector)
     {}
 

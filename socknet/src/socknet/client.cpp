@@ -2,36 +2,30 @@
 // Created by KHML on 2019-07-29.
 //
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 #include <utility>
 
+#include <socknet/core/sockapis.hpp>
 #include <socknet/core/connector.hpp>
 #include <socknet/client.hpp>
 
 namespace socknet
 {
     Client::Client(std::string address, const uint16_t portNumber) :
-        connector(socket(AF_INET, SOCK_STREAM, 0)), address(std::move(address)), portNumber(portNumber)
-    {
-        if (!connector.isConnected())
-            errors.emplace_back("socket Error");
-    }
+        connector(core::createSocket()), address(std::move(address)), portNumber(portNumber)
+    {}
 
     Client::~Client()
     = default;
 
     bool Client::connect()
     {
-        struct ::sockaddr_in addr{};
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons (portNumber);
-        addr.sin_addr.s_addr = ::inet_addr(address.c_str());
+        struct ::sockaddr_in addr = core::createAddr(portNumber, address);
 
-        if (::connect(connector.sockfd, (struct ::sockaddr*) &addr, sizeof(struct ::sockaddr_in)) < 0)
+        if (core::connectSocket(connector.sockfd, addr) < 0)
             terminate();
+
+        if (!connector.isConnected())
+            errors.emplace_back("socket Error");
 
         return isConnecting();
     }

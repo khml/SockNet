@@ -32,8 +32,7 @@ namespace socknet
         bool isConnecting() const;
 
     private:
-        ::socklen_t clientAddrSize;
-        ::sockaddr_in clientAddr{};
+        ::sockaddr_in dstAddr{};
         core::Connector connector;
     };
 }

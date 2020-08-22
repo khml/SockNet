@@ -4,12 +4,12 @@
 
 #include <sys/socket.h>
 
-#include <socknet/core/utilities.hpp>
+#include <socknet/core/sockapis.hpp>
 #include <socknet/server.hpp>
 
 namespace socknet
 {
-    Server::Server(const uint16_t portNumber) :sockfd(socket(AF_INET, SOCK_STREAM, 0))
+    Server::Server(const uint16_t portNumber) :sockfd(core::createSocket())
     {
         if (sockfd < 0)
         {
@@ -17,11 +17,9 @@ namespace socknet
             connectingFlg = false;
         }
 
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons(portNumber);
-        addr.sin_addr.s_addr = INADDR_ANY;
+        core::setSockaddr(addr, portNumber);
 
-        if (bind(sockfd, (struct sockaddr*) &addr, sizeof(addr)) < 0)
+        if (core::bindSocket(sockfd, addr) < 0)
             errors.emplace_back("bind Error");
     }
 
@@ -44,16 +42,14 @@ namespace socknet
 
     Connection Server::listen()
     {
-        static const ::socklen_t len = sizeof(addr);
-
-        if (::listen(sockfd, SOMAXCONN) < 0)
+        if (core::listenSocket(sockfd) < 0)
         {
             errors.emplace_back("listen Error");
             connectingFlg = false;
         }
 
-        Connection endPoint(sockfd, len);
-        return endPoint;
+        Connection connection(sockfd);
+        return connection;
     }
 
 }

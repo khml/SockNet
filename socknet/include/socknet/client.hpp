@@ -15,7 +15,7 @@ namespace socknet
     class Client
     {
     public:
-        Client(std::string address, uint16_t portNumber);
+        Client(std::string address, uint16_t port);
 
         virtual ~Client();
 
@@ -33,8 +33,9 @@ namespace socknet
 
     private:
         core::Connector connector;
+        struct ::sockaddr_in addr{};
         const std::string address;
-        const unsigned short portNumber;
+        const unsigned short port;
     };
 
 }

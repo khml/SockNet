@@ -2,25 +2,23 @@
 // Created by KHML on 2019-07-29.
 //
 
-#include <utility>
-
 #include <socknet/core/sockapis.hpp>
 #include <socknet/core/connector.hpp>
 #include <socknet/client.hpp>
 
 namespace socknet
 {
-    Client::Client(std::string address, const uint16_t portNumber) :
-        connector(core::createSocket()), address(std::move(address)), portNumber(portNumber)
-    {}
+    Client::Client(std::string address, const uint16_t port) :
+        connector(core::createSocket()), address(std::move(address)), port(port)
+    {
+        core::setSockaddr(addr, port, address);
+    }
 
     Client::~Client()
     = default;
 
     bool Client::connect()
     {
-        struct ::sockaddr_in addr = core::createAddr(portNumber, address);
-
         if (core::connectSocket(connector.sockfd, addr) < 0)
             terminate();
 

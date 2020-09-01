@@ -22,3 +22,20 @@ TEST(TestCoreSockapis, createAddr)
     EXPECT_EQ(addr.sin_port, htons(port));
     EXPECT_EQ(addr.sin_addr.s_addr, ::inet_addr(address.c_str()));
 }
+
+TEST(TestCoreSockapis, setSockaddr)
+{
+    const uint16_t port = 1234;
+    struct ::sockaddr_in addr1{};
+    socknet::core::setSockaddr(addr1, port);
+    EXPECT_EQ(addr1.sin_family, AF_INET);
+    EXPECT_EQ(addr1.sin_addr.s_addr, INADDR_ANY);
+    EXPECT_EQ(addr1.sin_port, htons(port));
+
+    struct ::sockaddr_in addr2{};
+    const std::string address = "127.0.0.1";
+    socknet::core::setSockaddr(addr2, port, address);
+    EXPECT_EQ(addr2.sin_family, AF_INET);
+    EXPECT_EQ(addr2.sin_port, htons(port));
+    EXPECT_EQ(addr2.sin_addr.s_addr, ::inet_addr(address.c_str()));
+}

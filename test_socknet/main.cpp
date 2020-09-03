@@ -39,3 +39,10 @@ TEST(TestCoreSockapis, setSockaddr)
     EXPECT_EQ(addr2.sin_port, htons(port));
     EXPECT_EQ(addr2.sin_addr.s_addr, ::inet_addr(address.c_str()));
 }
+
+TEST(TestCoreSockapis, createSocket)
+{
+    int sockfd = socknet::core::createSocket();
+    EXPECT_GT(sockfd, 1);
+    ::close(sockfd);
+}

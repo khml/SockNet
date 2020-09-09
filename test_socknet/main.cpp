@@ -46,3 +46,40 @@ TEST(TestCoreSockapis, createSocket)
     EXPECT_GE(sockfd, 0);
     ::close(sockfd);
 }
+
+TEST(TestCoreSockapis, bindSocket)
+{
+    // bindSocket(const int& sockfd, const struct ::sockaddr_in& addr)
+    int sockfd = socknet::core::createSocket();
+    ASSERT_GT(sockfd, 0);
+
+    struct ::sockaddr_in addr = socknet::core::createAddr(PORT);
+    EXPECT_EQ(addr.sin_family, AF_INET);
+    EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
+    EXPECT_EQ(addr.sin_port, htons(PORT));
+
+    int bindResult = socknet::core::bindSocket(sockfd, addr);
+    EXPECT_GE(bindResult, 0);
+    ::close(sockfd);
+
+    //bindSocket(const int& sockfd, uint16_t port)
+    sockfd = socknet::core::createSocket();
+    ASSERT_GE(sockfd, 0);
+
+    bindResult = socknet::core::bindSocket(sockfd, PORT);
+    EXPECT_GE(bindResult, 0);
+    ::close(sockfd);
+
+    //bindSocket(const int& sockfd, struct ::sockaddr_in& addr, uint16_t port)
+    sockfd = socknet::core::createSocket();
+    ASSERT_GE(sockfd, 0);
+
+    addr = ::sockaddr_in{};
+
+    bindResult = socknet::core::bindSocket(sockfd, addr, PORT);
+    EXPECT_GE(bindResult, 0);
+    EXPECT_EQ(addr.sin_family, AF_INET);
+    EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
+    EXPECT_EQ(addr.sin_port, htons(PORT));
+    ::close(sockfd);
+}

@@ -11,7 +11,7 @@
 #include <socknet/core/sockapis.hpp>
 
 static const uint PORT = 1234;
-static const char* ADDREESS = "127.0.0.1";
+static const char* ADDRESS = "127.0.0.1";
 
 TEST(TestCoreSockapis, createAddr)
 {
@@ -36,11 +36,11 @@ TEST(TestCoreSockapis, setSockaddr)
     EXPECT_EQ(addr1.sin_port, htons(PORT));
 
     struct ::sockaddr_in addr2{};
-    const std::string address(ADDREESS);
+    const std::string address(ADDRESS);
     socknet::core::setSockaddr(addr2, PORT, address);
     EXPECT_EQ(addr2.sin_family, AF_INET);
     EXPECT_EQ(addr2.sin_port, htons(PORT));
-    EXPECT_EQ(addr2.sin_addr.s_addr, ::inet_addr(ADDREESS));
+    EXPECT_EQ(addr2.sin_addr.s_addr, ::inet_addr(ADDRESS));
 }
 
 TEST(TestCoreSockapis, createSocket)
@@ -120,11 +120,11 @@ TEST(TestCoreSockapis, listenSocket)
         int sockfdClient = socknet::core::createSocket();
         ASSERT_GE(sockfdClient, 0);
 
-        const std::string address(ADDREESS);
+        const std::string address(ADDRESS);
         struct ::sockaddr_in addrClient = socknet::core::createAddr(PORT, address);
         EXPECT_EQ(addrClient.sin_family, AF_INET);
         EXPECT_EQ(addrClient.sin_port, htons(PORT));
-        EXPECT_EQ(addrClient.sin_addr.s_addr, ::inet_addr(ADDREESS));
+        EXPECT_EQ(addrClient.sin_addr.s_addr, ::inet_addr(ADDRESS));
 
         int connectResult = ::connect(sockfdClient, (struct ::sockaddr*) &addrClient, sizeof(struct ::sockaddr_in));
         ASSERT_GE(connectResult, 0);

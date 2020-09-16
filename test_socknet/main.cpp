@@ -10,8 +10,8 @@
 
 #include <socknet/core/sockapis.hpp>
 
-static const uint PORT = 1234;
-static const char* ADDRESS = "127.0.0.1";
+const uint PORT = 54321;
+const char* ADDRESS = "127.0.0.1";
 
 TEST(TestCoreSockapis, createAddr)
 {

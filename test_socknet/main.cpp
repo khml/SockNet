@@ -135,7 +135,7 @@ TEST(TestCoreSockapis, listenSocket)
 
         int connectResult = ::connect(sockfdClient, (struct ::sockaddr*) &addrClient, sizeof(struct ::sockaddr_in));
         ASSERT_GE(connectResult, 0);
-        ::close(connectResult);
+        ::close(sockfdClient);
     };
     std::thread clientThread(client);
 

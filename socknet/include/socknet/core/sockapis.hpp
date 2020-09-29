@@ -204,6 +204,8 @@ namespace socknet
          * @details ::close(sockfd)
          */
         int closeSocket(const int& sockfd);
+
+        std::string bindError(::errno_t error);
     }
 }
 

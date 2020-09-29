@@ -107,7 +107,7 @@ TEST(TestCoreSockapis, listenSocket)
         EXPECT_EQ(addr.sin_port, htons(port));
 
         int bindResult = socknet::core::bindSocket(sockfd, addr);
-        ASSERT_GE(bindResult, 0);
+        ASSERT_GE(bindResult, 0) << socknet::core::bindError(errno);
 
         int listenResult = socknet::core::listenSocket(sockfd);
         ASSERT_GE(listenResult, 0);
@@ -123,7 +123,6 @@ TEST(TestCoreSockapis, listenSocket)
     // clientThread
     auto client = [port]()
     {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
         int sockfdClient = socknet::core::createSocket();
         ASSERT_GE(sockfdClient, 0);
 
@@ -161,7 +160,7 @@ TEST(TestCoreSockapis, acceptSocket)
         EXPECT_EQ(addr.sin_port, htons(port));
 
         int bindResult = socknet::core::bindSocket(sockfd, addr);
-        ASSERT_GE(bindResult, 0);
+        ASSERT_GE(bindResult, 0) << socknet::core::bindError(errno);
 
         int listenResult = socknet::core::listenSocket(sockfd);
         ASSERT_GE(listenResult, 0);

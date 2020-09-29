@@ -142,5 +142,50 @@ namespace socknet
         {
             return ::close(sockfd);
         }
+
+        std::string bindError(::errno_t error)
+        {
+            switch (error)
+            {
+                case EACCES:
+                    return "The requested address is protected, and the current user has inadequate permission to access it.A component of the path prefix does not allow searching or the node's parent directory denies write permission.";
+                case EADDRINUSE:
+                    return "The specified address is already in use.";
+                case EADDRNOTAVAIL:
+                    return "The specified address is not available from the local machine.";
+                case EAFNOSUPPORT:
+                    return "address is not valid for the address family of socket.";
+                case EBADF:
+                    return "socket is not a valid file descriptor.";
+                case EDESTADDRREQ:
+                    return "socket is a null pointer.";
+                case EFAULT:
+                    return "The address parameter is not in a valid part of the user address space.";
+                case EINVAL:
+                    return "socket is already bound to an address and the protocol does not support binding to a new address.  Alternatively, socket may have been shut down.";
+                case ENOTSOCK:
+                    return "socket does not refer to a socket.";
+                case EOPNOTSUPP:
+                    return "socket is not of a type that can be bound to an address.";
+                case EEXIST:
+                    return "A file already exists at the pathname.  unlink(2) it first.";
+                case EIO:
+                    return "An I/O error occurred while making the directory entry or allocating the inode";
+                case EISDIR:
+                    return "An empty pathname was specified.";
+                case ELOOP:
+                    return "Too many symbolic links were encountered in translating the pathname.  This is taken to be indicative of a looping symbolic link.";
+                case ENAMETOOLONG:
+                    return "A component of a pathname exceeded {NAME_MAX} characters, or an entire path name exceeded {PATH_MAX} characters.";
+                case ENOENT:
+                    return "A component of the path name does not refer to an existing file.";
+                case ENOTDIR:
+                    return "A component of the path prefix is not a directory.";
+                case EROFS:
+                    return "The name would reside on a read-only file system.";
+                default:
+                    return "Unknown Error";
+            }
+        }
     }
 }

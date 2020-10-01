@@ -2,7 +2,6 @@
 // Created by KHML on 2020/08/09.
 //
 #include <arpa/inet.h>
-#include <chrono>
 #include <thread>
 
 #include <gtest/gtest.h>
@@ -183,7 +182,6 @@ TEST(TestCoreSockapis, acceptSocket)
     // clientThread
     auto client = []()
     {
-        std::this_thread::sleep_for(std::chrono::seconds(2));
         int sockfd = socknet::core::createSocket();
         ASSERT_GE(sockfd, 0);
 

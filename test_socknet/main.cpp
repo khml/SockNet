@@ -156,7 +156,7 @@ TEST(TestCoreSockapis, acceptSocket)
     const uint port = 54325;
 
     //server
-    auto server = []()
+    auto server = [port]()
     {
         int sockfd = socknet::core::createSocket();
         ASSERT_GE(sockfd, 0);
@@ -180,7 +180,7 @@ TEST(TestCoreSockapis, acceptSocket)
     std::thread serverThread(server);
 
     // clientThread
-    auto client = []()
+    auto client = [port]()
     {
         int sockfd = socknet::core::createSocket();
         ASSERT_GE(sockfd, 0);
@@ -208,7 +208,7 @@ TEST(TestCoreSockapis, connectSocket)
     const uint port = 54326;
 
     //server
-    auto server = []()
+    auto server = [port]()
     {
         int sockfd = socknet::core::createSocket();
         ASSERT_GE(sockfd, 0);
@@ -232,7 +232,7 @@ TEST(TestCoreSockapis, connectSocket)
     std::thread serverThread(server);
 
     // clientThread
-    auto client = []()
+    auto client = [port]()
     {
         std::this_thread::sleep_for(std::chrono::seconds(2));
         int sockfd = socknet::core::createSocket();

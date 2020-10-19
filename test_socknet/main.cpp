@@ -2,6 +2,8 @@
 // Created by KHML on 2020/08/09.
 //
 #include <arpa/inet.h>
+#include <sys/socket.h>
+#include <cstring>
 #include <thread>
 
 #include <gtest/gtest.h>
@@ -246,6 +248,73 @@ TEST(TestCoreSockapis, connectSocket)
 
         int connectResult = socknet::core::connectSocket(sockfd, addrClient);
         ASSERT_GE(connectResult, 0);
+        ::close(sockfd);
+    };
+    std::thread clientThread(client);
+
+
+    // server side join
+    serverThread.join();
+    clientThread.join();
+}
+
+TEST(TestCoreSockapis, send)
+{
+    const uint port = 54327;
+
+    const std::string message = "hello this is test";
+
+    //server
+    auto server = [port, &message]()
+    {
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
+
+        struct ::sockaddr_in addr = socknet::core::createAddr(port);
+        EXPECT_EQ(addr.sin_family, AF_INET);
+        EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
+        EXPECT_EQ(addr.sin_port, htons(port));
+
+        int bindResult = socknet::core::bindSocket(sockfd, addr);
+        ASSERT_GE(bindResult, 0) << socknet::core::bindError(errno);
+
+        int listenResult = socknet::core::listenSocket(sockfd);
+        ASSERT_GE(listenResult, 0);
+
+        struct ::sockaddr_in dstAddr{};
+        int dstSockfd = socknet::core::acceptSocket(sockfd, dstAddr);
+        int sendResult = socknet::core::send(dstSockfd, message);
+        EXPECT_GT(sendResult, 0);
+        ::close(sockfd);
+        ::close(dstSockfd);
+    };
+    std::thread serverThread(server);
+
+    // clientThread
+    auto client = [port, &message]()
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
+
+        const std::string address(ADDRESS);
+        struct ::sockaddr_in addrClient = socknet::core::createAddr(port, address);
+        EXPECT_EQ(addrClient.sin_family, AF_INET);
+        EXPECT_EQ(addrClient.sin_port, htons(port));
+        EXPECT_EQ(addrClient.sin_addr.s_addr, ::inet_addr(ADDRESS));
+
+        int connectResult = socknet::core::connectSocket(sockfd, addrClient);
+        ASSERT_GE(connectResult, 0);
+
+        size_t bufferSize = 1024;
+        char* buf = new char[bufferSize];
+        size_t bufSize = sizeof(char) * bufferSize;
+        std::memset(buf, 0, bufSize);
+        ssize_t recv_size = ::recv(sockfd, buf, bufSize, 0);
+        std::string msg = std::string(buf);
+        delete[] buf;
+        EXPECT_GT(recv_size, 0);
+        EXPECT_EQ(msg, message);
         ::close(sockfd);
     };
     std::thread clientThread(client);

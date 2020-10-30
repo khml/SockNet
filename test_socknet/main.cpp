@@ -396,3 +396,78 @@ TEST(TestCoreSockapis, receive)
     serverThread.join();
     clientThread.join();
 }
+
+TEST(TestCoreSockapis, closeSocket)
+{
+    const uint port = 54328;
+
+    const std::string message = "hello this is test";
+    const std::string message2 = "second test message";
+
+    //server
+    auto server = [port, &message, &message2]()
+    {
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
+
+        struct ::sockaddr_in addr = socknet::core::createAddr(port);
+        EXPECT_EQ(addr.sin_family, AF_INET);
+        EXPECT_EQ(addr.sin_addr.s_addr, INADDR_ANY);
+        EXPECT_EQ(addr.sin_port, htons(port));
+
+        int bindResult = socknet::core::bindSocket(sockfd, addr);
+        ASSERT_GE(bindResult, 0) << socknet::core::bindError(errno);
+
+        int listenResult = socknet::core::listenSocket(sockfd);
+        ASSERT_GE(listenResult, 0);
+
+        struct ::sockaddr_in dstAddr{};
+        int dstSockfd = socknet::core::acceptSocket(sockfd, dstAddr);
+        int sendResult = socknet::core::send(dstSockfd, message);
+        EXPECT_GT(sendResult, 0);
+
+        std::string msg = socknet::core::receive(dstSockfd);
+        EXPECT_EQ(msg, message2);
+
+        int closeResult = socknet::core::closeSocket(sockfd);
+        EXPECT_EQ(closeResult, 0);
+        closeResult = socknet::core::closeSocket(dstSockfd);
+        EXPECT_EQ(closeResult, 0);
+    };
+    std::thread serverThread(server);
+
+    // clientThread
+    auto client = [port, &message, &message2]()
+    {
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        int sockfd = socknet::core::createSocket();
+        ASSERT_GE(sockfd, 0);
+
+        const std::string address(ADDRESS);
+        struct ::sockaddr_in addrClient = socknet::core::createAddr(port, address);
+        EXPECT_EQ(addrClient.sin_family, AF_INET);
+        EXPECT_EQ(addrClient.sin_port, htons(port));
+        EXPECT_EQ(addrClient.sin_addr.s_addr, ::inet_addr(ADDRESS));
+
+        int connectResult = socknet::core::connectSocket(sockfd, addrClient);
+        ASSERT_GE(connectResult, 0);
+
+        size_t bufferSize = 1024;
+        std::string msg;
+        const size_t recv_size = socknet::core::receive(sockfd, msg, bufferSize);
+        EXPECT_GT(recv_size, 0);
+        EXPECT_EQ(msg, message);
+
+        int sendResult = socknet::core::send(sockfd, message2);
+        EXPECT_GT(sendResult, 0);
+
+        int closeResult = socknet::core::closeSocket(sockfd);
+        EXPECT_EQ(closeResult, 0);
+    };
+    std::thread clientThread(client);
+
+
+    // server side join
+    serverThread.join();
+    clientThread.join();
+}

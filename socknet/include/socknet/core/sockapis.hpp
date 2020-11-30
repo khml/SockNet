@@ -8,6 +8,7 @@
 #ifndef SOCKNET_SOCKAPIS_HPP
 #define SOCKNET_SOCKAPIS_HPP
 
+#include <errno.h>
 #include <netinet/in.h>
 #include <cstddef>
 #include <string>
